@@ -97,6 +97,7 @@ class LT3Action(argparse.Action):
     def __init__(self, option_strings, dest, **kwargs):
         super().__init__(option_strings, dest, **kwargs)
     def __call__(self, parser, namespace, values, option_string=None):
+        import csscat.core
         csscat.core.lt3()
 
 
