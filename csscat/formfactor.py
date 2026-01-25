@@ -33,19 +33,19 @@ class Atom():
 
     Attributes
     ----------
-    element (str):
+    element : str
         Chemical symbol of the element (e.g., 'C' for carbon).
-    z (int):
+    z : int
         Atomic number of the element.
-    charge (int):
+    charge : int
         Net charge of the atom.
-    method (str):
+    method : str
         Method or reference for the form factor parameters.
-    a (list[float]):
+    a : list[float]
         List of 'a' coefficients for the exponential terms.
-    b (list[float]):
+    b : list[float]
         List of 'b' coefficients for the exponential terms.
-    c (float):
+    c : float
         Constant term in the form factor equation.
 
     Raises
@@ -72,12 +72,12 @@ class Atom():
 
         Arguments
         ---------
-        q (np.ndarray):
+        q : np.ndarray
             An array of q vector values for which the form factor is to be calculated.
             
         Returns
         -------
-        np.ndarray:
+        : np.ndarray:
             An array containing the calculated form factor values corresponding to each input q.
         """
         # If s-vector is smaller than 2.0 1/A (or 8*pi) the AAF equations are not valid
@@ -104,31 +104,14 @@ class Pseudo():
 
     Attributes
     ----------
-    elements (list[str]):
+    elements : list[str]
         List of atom types representing the constituent atoms of the pseudo-atom.
-    coords (ndarray): 
+    coords : np.ndarray 
         A 2D numpy array of shape (N, 3) containing the 3D coordinates of the constituent atoms.
-    form_dict (dict):
+    form_dict : dict
         A dictionary mapping element symbols to their corresponding Atom instances.
     """
     def __init__(self, elements: list, coords: np.ndarray, form_dict: dict[Atom]):
-        """Class representing form factors for pseudo-atoms. For pseudo-atoms, the form factor
-        is calculated using the Debye equation, which accounts for the interference effects
-        between constituent atoms:
-
-        .. math::
-
-            f(q)^2 = \sum_{i} \sum_{j} f_i(q) f_j(q) \frac {\sin(qr_{ij})} {qr_{ij}}
-
-        Attributes
-        ----------
-        elements (list[str]):
-            List of atom types representing the constituent atoms of the pseudo-atom.
-        coords (ndarray): 
-            A 2D numpy array of shape (N, 3) containing the 3D coordinates of the constituent atoms.
-        form_dict (dict):
-            A dictionary mapping element symbols to their corresponding Atom instances.
-        """
         self.elements = list(elements)
         self.coords = np.array(coords)
         # Check input
@@ -183,21 +166,13 @@ class Custom():
 
     Attributes
     ----------
-    expr (Callable[[float], float]):
+    expr : Callable[[float], float]
         A user-defined function that takes a single float and returns a float.
     """
-    def __init__(self, expr: Callable[[float], float]):
-        """Custom is a wrapper class for user-defined form factor functions.
-
-        Attributes
-        ----------
-        expr (Callable[[float], float]):
-            A user-defined function that takes a single float and returns a float.
-        """
-        # Check if callable
+    def __init__(self, expr: Callable[[float], float]): 
+        # Check if callable and inspect signature
         if not callable(expr):
             raise TypeError("input must be callable")
-        # Inspect signature
         sig = inspect.signature(expr)
         if len(sig.parameters) != 1:
             raise ValueError("Function must take exactly one argument")
@@ -242,27 +217,29 @@ class FormDict(dict):
             self.__setitem__(k, v)
 
     def add_atom(self, key, *args, **kwargs):
-        """Adds a Atom instance to the dictionary.
-        Check :class:`formfactor.Atom` class for more details.
-        """
+        """Adds a Atom instance to the dictionary. 
+        """ + (Atom.__doc__ or "")
         super().__setitem__(key, Atom(*args, **kwargs))
 
     def add_pseudo(self, key, *args, **kwargs):
-        """Adds a Pseudo instance to the dictionary.
-        Check :class:`formfactor.Pseudo` class for more details."""
+        """
+        Adds a Pseudo instance to the dictionary. 
+        """ + (Pseudo.__doc__ or "")
         super().__setitem__(key, Pseudo(*args, **kwargs, form_dict=self))
 
     def add_custom(self, key, *args, **kwargs):
-        """Adds a Custom instance to the dictionary.
-        Check :class:`formfactor.Custom` class for more details."""
+        """
+        Adds a Custom instance to the dictionary. 
+        """ + (Custom.__doc__ or "")
         super().__setitem__(key, Custom(*args, **kwargs))
     
     def read_json(self, path):
         """Reads form factor definitions from a JSON file and populates the dictionary.
 
-        Args:
-            path (str or Path):
-                Path to the JSON file containing form factor definitions.
+        Arguments
+        ---------
+        path : str or Path
+            Path to the JSON file containing form factor definitions.
         """
         with open(path) as f:
             df = json.load(f)
@@ -277,7 +254,9 @@ class FormDict(dict):
 formfactors = FormDict().read_json(
     Path(__file__).parent / "formfactor.json"
 )
-"""A dictionary containing predefined form factors.
-Keys are element symbols or custom names, and values are instances of Atom, Pseudo, or Custom classes.
+"""
+A dictionary containing predefined form factors. Keys are element symbols or
+custom names, and values are instances of :class:`formfactor.Atom`,
+:class:`formfactor.Pseudo`, or :class:`formfactor.Custom` classes.
 """
 

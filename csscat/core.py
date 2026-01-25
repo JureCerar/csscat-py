@@ -32,7 +32,7 @@ def num_devices():
 
     Returns
     -------
-    int
+    : int
         Number of available GPU devices. Returns -1 if compiled without GPU support.
     """
     return _core.deviceCount()
@@ -60,18 +60,18 @@ def hist_ii(nbins: int, binsize: float, xyz_i: np.ndarray, box: np.ndarray, *, b
 
     Arguments
     ---------
-    nbins (int):
+    nbins : int
         The number of bins to use in the histogram.
-    binsize (float):
+    binsize : float
         The size of each bin.
-    xyz_i (np.ndarray):
+    xyz_i : np.ndarray
         An (N, 3) array of point coordinates in 3D space.
-    box (np.ndarray):
+    box : np.ndarray
         A (3,) array specifying the dimensions of the simulation box.
 
     Returns
     -------
-    np.ndarray
+    : np.ndarray
         The computed histogram as a 1D array of length `nbins`.
 
     Notes
@@ -95,20 +95,20 @@ def hist_ij(nbins: int, binsize: float, xyz_i: np.ndarray, xyz_j: np.ndarray, bo
 
     Arguments
     ---------
-    nbins (int):
+    nbins : int
         The number of bins to use in the histogram.
-    binsize (float):
+    binsize : float
         The size of each bin.
-    xyz_i (np.ndarray):
+    xyz_i : np.ndarray
         An (N, 3) array of point coordinates in 3D space of type `i`
-    xyz_j (np.ndarray):
+    xyz_j : np.ndarray
         An (N, 3) array of point coordinates in 3D space of type `j`.
-    box (np.ndarray):
+    box : np.ndarray
         A (3,) array specifying the dimensions of the simulation box.
 
     Returns
     -------
-    np.ndarray
+    : np.ndarray
         The computed histogram as a 1D array of length `nbins`.
 
     Notes

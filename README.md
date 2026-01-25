@@ -1,6 +1,6 @@
 # CSScat  - Complemented System Scattering
 
-This is a Python implementation of [Complemented System Approach](https://doi.org/10.1063/1.3502683) – a method used to calculate Small-Angle X-Ray Scattering (SAXS) from molecular simulation data. 
+This is a Python implementation of [Complemented System Approach](https://doi.org/10.1063/1.3502683) _i.e._ a method used to calculate Small-Angle X-Ray Scattering (SAXS) from molecular simulation data. 
 
 <p align="center">
     <img src="figure.png" width="600">
@@ -8,7 +8,7 @@ This is a Python implementation of [Complemented System Approach](https://doi.or
 
 ## Background 
 
-In Complemented System Approach scattering is calculated as a sum of two terms: The first term is based on the well-known Debye equation that calculates the scattering of the simulation box – discrete systems. This is extended with an additional term representing the interference of the limited simulated system with the infinite surroundings of an electron density equal to the averaged electron density of the simulated system. Such an approximation effectively "masks" the finiteness of the system by complementing the missing surroundings of each particle with an average image of the system (hence the name):
+In Complemented System Approach scattering is calculated as a sum of two terms: The first term is based on the well-known Debye equation that calculates the scattering of the simulation box _i.e._ discrete systems. This is extended with an additional term representing the interference of the limited simulated system with the infinite surroundings of an electron density equal to the averaged electron density of the simulated system. Such an approximation effectively "masks" the finiteness of the system by complementing the missing surroundings of each particle with an average image of the system (hence the name):
 
 $$
 \frac{d\Sigma}{d\Omega}(q) = \frac{r_e^2}{V} \sum_{i=1}^{N} \sum_{j=1}^{N} f_i(q) f_j(q) \frac {sin(qr_{ij})} {qr_{ij}} \cdot H (r_c - r_{ij}) 
@@ -86,22 +86,17 @@ You can extend or override these definitions by adding your own atoms, pseudo-at
 
 ```python
 from csscat import formfactors
-from csscat.formfactor import Atom, Pseudo, Custom
 
 # Add a new atom with custom parameters
 formfactors.add_atom("H", a=[0.493, 0.323, 0.142, 0.041],
                      b=[10.51, 26.13, 3.14, 57.80], c=0.003038)
-# Or via direct assignment
-formfactors["H"] = Atom(...)
 
 # Add a new pseudo-atom composed of other atoms
 formfactors.add_pseudo("CH", elements=["C", "H"], 
                        coords=[[0, 0, 0], [1.05, 0, 0]])
-formfactors["CH"] = Pseudo(...)
 
 # Add a new custom atom with a user-defined form factor function
 formfactors.add_custom("X", expr=lambda q: q ** -2)
-formfactors["X"] = Custom(...)
 ```
 
 The `formfactors` object behaves like a standard Python dictionary, with exception that only valid data types are `Atom`, `Pseudo`, and `Custom`. If you create custom dictionary it can be passed to the `CSScat` class via the `form_dict` argument:

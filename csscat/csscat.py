@@ -40,21 +40,21 @@ class CSScat(AnalysisBase):
 
     Arguments
     ---------
-    ag (groups.AtomGroup):
+    ag : groups.AtomGroup
         The AtomGroup instance containing atomic coordinates and properties.
-    binsize (float, optional):
+    binsize :  float, optional
         The bin size for distance histogramming [Å], must be positive.
-    qmin (float, optional):
+    qmin : float, optional
         Minimum value of the q-vector range [Å⁻¹].
-    qmax (float, optional):
+    qmax : float, optional
         Maximum value of the q-vector range [Å⁻¹].
-    qpoints (int, optional):
+    qpoints : int, optional
         Number of points in the q-vector scale, must be at least 1
-    logscale (bool, optional):
+    logscale : bool, optional
         Use logarithmic spacing for the q-vector scale; otherwise, use linear spacing (default).
-    form_dict (dict, optional):
+    form_dict : dict, optional
         Optional dictionary of form factors to override or extend the defaults.
-    **kwargs:
+    **kwargs :
         Additional keyword arguments passed to the parent class initializer.
 
     Notes
@@ -92,52 +92,6 @@ class CSScat(AnalysisBase):
 
     def __init__(self, ag, binsize: float = 0.002, qmin: float = 0.0, qmax: float = 2.5, qpoints: int = 251,
                  logscale: bool = False, form_dict: dict = None, *, backend: str = "auto", **kwargs):
-        """
-        A class for computing small-angle X-ray scattering (SAXS) intensities from atomic coordinates 
-        using the complemented system. Atomic form factors are applied based on element types and formal
-        charges that are defined in the `formfactor` module.
-
-        Arguments
-        ---------
-        ag (groups.AtomGroup):
-            The AtomGroup instance containing atomic coordinates and properties.
-        binsize (float, optional):
-            The bin size for histogramming [Å], must be positive.
-        qmin (float, optional):
-            Minimum value of the q-vector range [Å⁻¹].
-        qmax (float, optional):
-            Maximum value of the q-vector range [Å⁻¹].
-        qpoints (int, optional): 
-            Number of points in the q-vector scale, must be at least 1
-        logscale (bool, optional): 
-            Use logarithmic spacing for the q-vector scale; otherwise, use linear spacing (default).
-        form_dict (dict, optional): 
-            Optional dictionary of form factors to override or extend the defaults.
-        **kwargs: 
-            Additional keyword arguments passed to the parent class initializer.
-
-        Notes
-        -----
-        The `AtomGroup` must have an `elements` attribute, and optionally a `formalcharges`
-        attribute. The form factor dictionary is constructed by updating the default form factors
-        with any user-provided values.
-            
-        Examples
-        --------
-        >>> import MDAnalysis as mda
-        >>> import csscat
-        >>> u = mda.Universe("topology.pdb", "trajectory.dcd")
-        >>> R = csscat.CSScat(
-        ...     u.atoms,
-        ...     binsize=0.002, # [Å]
-        ...     qmin=0.0,  # [Å⁻¹]
-        ...     qmax=2.5,  # [Å⁻¹]
-        ...     qpoints=251,
-        ... ).run()
-        >>> qrange = R.results.qrange
-        >>> dsdo = R.results.dsdo.mean(axis=0)
-        >>> R.save("output.pdh")  # Save results in PDH format
-        """
         # HACK: Delay core import to save startup time
         from . import core
 
@@ -287,9 +241,9 @@ class CSScat(AnalysisBase):
 
         Arguments
         ---------
-        fname (str or Path):
+        fname : str or Path
             The output file path where the results will be written.
-        fmt (str, optional):
+        fmt : str, optional
             The file format to use for output. Format is inferred from
             the file extension if not provided. Supported formats are:
             * ".pdh": Primary Data Handling format
