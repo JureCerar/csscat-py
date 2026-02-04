@@ -23,7 +23,7 @@ from dataclasses import dataclass, field
 
 @dataclass
 class Atom():
-    """Class representing atomic form factors (AAF) as defined in the `International Tables for Crystallography`_
+    r"""Class representing atomic form factors (AAF) as defined in the `International Tables for Crystallography`_
     The atomic form factor describes the scattering amplitude of an atom as a function of the scattering vector q.
     It is expressed as a sum of Gaussian functions plus a constant term:
 
@@ -94,7 +94,7 @@ class Atom():
 
 
 class Pseudo():
-    """Class representing form factors for pseudo-atoms. For pseudo-atoms, the form factor
+    r"""Class representing form factors for pseudo-atoms. For pseudo-atoms, the form factor
     is calculated using the Debye equation, which accounts for the interference effects
     between constituent atoms:
 
@@ -137,12 +137,12 @@ class Pseudo():
 
         Arguments
         ---------
-        q (np.ndarray):
+        q : np.ndarray
             An array of q vector values for which the form factor is to be calculated.
             
         Returns
         -------
-        np.ndarray:
+        : np.ndarray
             An array containing the calculated form factor values corresponding to each input q.
         """
         y = np.zeros_like(q)
@@ -186,12 +186,12 @@ class Custom():
 
         Arguments
         ---------
-        q (np.ndarray):
+        q : np.ndarray
             An array of q vector values for which the form factor is to be calculated.
             
         Returns
         -------
-        np.ndarray:
+        : np.ndarray
             An array containing the calculated form factor values corresponding to each input q.
         """
         return np.vectorize(self.expr)(q)

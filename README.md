@@ -1,4 +1,4 @@
-# CSScat  - Complemented System Scattering
+# CSScat-py  - Complemented System Scattering
 
 This is a Python implementation of [Complemented System Approach](https://doi.org/10.1063/1.3502683) _i.e._ a method used to calculate Small-Angle X-Ray Scattering (SAXS) from molecular simulation data. 
 
@@ -24,16 +24,24 @@ For a comprehensive explanation of the complemented-system approach, refer to th
 
 ## Installation
 
-You can install csscat-py using pip. First, clone the repository and then install the package:
+You can install the package using pip. First, clone the repository and then install the package with:
 
 ```bash
 git clone https://github.com/JureCerar/csscat-py.git
 cd csscat-py
-pip install .
+pip install csscat
+```
+
+#### GPU support (optional)
+
+To enable CUDA acceleration, install the optional GPU dependencies with:
+
+```bash
+pip install csscat[gpu]
 ```
 
 > [!NOTE]
-> If `pytorch` is detected during installation, a CUDA-accelerated version of the algorithm will be built automatically. See [pytorch](https://pytorch.org/get-started/locally/) documentation on how to install it. This also requires an NVIDIA GPU and up-to-date drivers. 
+> This build requires [pytorch](https://pytorch.org/get-started/locally/) with CUDA support and an NVIDIA GPU with up-to-date drivers.
 
 ## Usage
 
@@ -80,7 +88,7 @@ if not hasattr(u.atoms, "elements"):
     u.guess_TopologyAttrs(to_guess=["elements"])
 ```
 
-A wide range of common atoms and ions (from H to Xe) are natively supported, with form factors sourced from [crystallographic tables](https://doi.org/10.1107/97809553602060000600). CSScat-py also supports pseudo-atoms, where the form factor is computed internally using the Debye equation from provided atom coordinates.
+A wide range of common atoms and ions (from H to Xe) are natively supported, with form factors sourced from [crystallographic tables](https://doi.org/10.1107/97809553602060000600). Package also supports pseudo-atoms, where the form factor is computed internally using the Debye equation from provided atom coordinates.
 
 You can extend or override these definitions by adding your own atoms, pseudo-atoms, or custom form factor expressions. This is done by modifying (or creating a local copy) the form factor dictionary, for example:
 
@@ -110,7 +118,7 @@ This allows you to tailor the atomic form factor definitions to your specific sy
 
 ## Literature
 
-If you are using CSScat-py please cite the following: 
+If you are using using this software please cite the following: 
 
 ```bibtex
 @article{Lajovic2010,
@@ -149,7 +157,7 @@ If you are using CSScat-py please cite the following:
 
 This program is licensed under the __GNU General Public License v3.0__
 
-Copyright (C) 2025 [Jure Cerar](https://github.com/JureCerar)
+Copyright (C) 2025-2026 [Jure Cerar](https://github.com/JureCerar)
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 

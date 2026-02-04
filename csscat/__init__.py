@@ -29,9 +29,9 @@ from .csscat import CSScat
 from .formfactor import formfactors
 
 __author__ = "Jure Cerar"
-__copyright__ = "Copyright (C) 2025 Jure Cerar"
+__copyright__ = "Copyright (C) 2025-2026 Jure Cerar"
 __license__ = "GNU GPL v3.0"
-__version__ = "0.8.13"
+__version__ = "0.8.14"
 __all__ = [
     "CSScat",
     "formfactors",
